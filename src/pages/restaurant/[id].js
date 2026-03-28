@@ -29,22 +29,54 @@ export default function RestaurantPage() {
   };
 
   return (
-    <div>
-      <h1>Menu</h1>
+    <div style={{ maxWidth: "600px", margin: "30px auto", fontFamily: "Arial, sans-serif" }}>
+      <h1 style={{ textAlign: "center", color: "#333" }}>Menu</h1>
 
       {/* Success Message */}
       {message && (
-        <p style={{ color: "green", fontWeight: "bold" }}>
+        <p
+          style={{
+            color: "green",
+            fontWeight: "bold",
+            backgroundColor: "#e0ffe0",
+            padding: "10px",
+            borderRadius: "5px",
+            textAlign: "center",
+          }}
+        >
           {message}
         </p>
       )}
 
       {menuItems.map((item, index) => (
-        <div key={index}>
-          <p>
+        <div
+          key={index}
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            padding: "12px 15px",
+            margin: "8px 0",
+            border: "1px solid #ccc",
+            borderRadius: "8px",
+            backgroundColor: "#f9f9f9",
+          }}
+        >
+          <p style={{ margin: 0, fontSize: "16px", color: "#555" }}>
             {item.name} - ₹{item.price}
           </p>
-          <button onClick={() => handleAddToCart(item)}>
+          <button
+            onClick={() => handleAddToCart(item)}
+            style={{
+              backgroundColor: "#ff6b6b",
+              color: "white",
+              border: "none",
+              padding: "8px 16px",
+              borderRadius: "5px",
+              cursor: "pointer",
+              fontWeight: "bold",
+            }}
+          >
             Add to Cart
           </button>
         </div>

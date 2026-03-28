@@ -1,20 +1,28 @@
 export const restaurants = [
-  {
-    id: 1,
-    name: "Pizza Hub",
-    rating: 4.3,
-    image: "./images/burger.webp"
-  },
-  {
-    id: 2,
-    name: "Burger King",
-    rating: 4.1,
-    image: "./images/pizza.jpg"
-  },
-    {
-    id: 3,
-    name: "Burger King",
-    rating: 5,
-    image: "./images/pizza.jpg"
-  }
-];
+  { id: 1, name: "Pizza Hub", rating: 4.3, image: "./images/burger.webp" },
+  { id: 1, name: "Dosa", rating: 4.5, image: "./images/dosa.webp" },
+  { id: 2, name: "Idli", rating: 4.4, image: "./images/idli.jfif" },
+  { id: 3, name: "Vada", rating: 4.3, image: "./images/vada.jpg" },
+  { id: 4, name: "Upma", rating: 4.0, image: "./images/upma.jpg" },
+  { id: 5, name: "Pongal", rating: 4.2, image: "./images/pongal.jpg" },
+  { id: 6, name: "Poori", rating: 4.3, image: "./images/poori.jpg" },
+  { id: 7, name: "Chapati", rating: 4.1, image: "./images/chapati.jpg" },
+  { id: 8, name: "Paratha", rating: 4.4, image: "./images/paratha.jpg" },
+  { id: 9, name: "Veg Biryani", rating: 4.5, image: "./images/veg-biryani.jpg" },
+  { id: 10, name: "Chicken Biryani", rating: 4.8, image: "./images/chicken-biryani.jpg" },
+  { id: 11, name: "Mutton Biryani", rating: 4.7, image: "./images/mutton-biryani.jpg" },
+  { id: 12, name: "Egg Curry", rating: 4.3, image: "./images/egg-curry.jpg" },
+  { id: 13, name: "Paneer Butter Masala", rating: 4.6, image: "./images/paneer.jpg" },
+  { id: 14, name: "Dal Tadka", rating: 4.2, image: "./images/dal.jpg" },
+  { id: 15, name: "Sambar", rating: 4.4, image: "./images/sambar.jpg" },
+  { id: 16, name: "Rasam", rating: 4.1, image: "./images/rasam.jpg" },
+  { id: 17, name: "Curd Rice", rating: 4.3, image: "./images/curd-rice.jpg" },
+  { id: 18, name: "Fried Rice", rating: 4.2, image: "./images/fried-rice.jpg" },
+  { id: 19, name: "Noodles", rating: 4.0, image: "./images/noodles.jpg" },
+  { id: 20, name: "Manchurian", rating: 4.3, image: "./images/manchurian.jpg" },
+  { id: 21, name: "Chicken Curry", rating: 4.6, image: "./images/chicken-curry.jpg" },
+  { id: 22, name: "Fish Fry", rating: 4.5, image: "./images/fish-fry.jpg" },
+  { id: 23, name: "Prawns Curry", rating: 4.6, image: "./images/prawns.jpg" },
+  { id: 24, name: "Ice Cream", rating: 4.2, image: "./images/icecream.jpg" },
+  { id: 25, name: "Gulab Jamun", rating: 4.7, image: "./images/gulabjamun.jpg" }
+]
