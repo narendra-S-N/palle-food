@@ -3,7 +3,7 @@ import { collection, addDoc } from "firebase/firestore";
 import { useCart } from "../context/CartContext";
 
 export default function Checkout() {
-  const { cart, total ,clearCart } = useCart();
+  const { cart, total, clearCart } = useCart();
 
   const placeOrder = async () => {
     const user = auth.currentUser;
@@ -16,14 +16,15 @@ export default function Checkout() {
     try {
       await addDoc(collection(db, "orders"), {
         userId: user.uid,
-        items: cart, // ✅ correct
-        total: total, // ✅ correct
-        status: "Pending", 
+        items: cart,
+        total: total,
+        shop: cart[0]?.shop, // ✅ ADD THIS
+        status: "Pending",
         createdAt: new Date(),
       });
       alert("Order placed!");
       clearCart(); // ✅ clears cart
-      
+
 
     } catch (error) {
       console.log(error);
@@ -35,8 +36,8 @@ export default function Checkout() {
       <h1>Checkout</h1>
 
       {cart.map((item, index) => (
-        <p key={index}>
-          {item.name} x {item.quantity}
+        <p key={item.name}>
+          {item.name} ({item.shop}) x {item.quantity}
         </p>
       ))}
 

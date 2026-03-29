@@ -15,14 +15,4 @@ export const restaurants = [
   { id: 13, name: "Paneer Butter Masala", rating: 4.6, image: "./images/paneer.jpg" },
   { id: 14, name: "Dal Tadka", rating: 4.2, image: "./images/dal.jpg" },
   { id: 15, name: "Sambar", rating: 4.4, image: "./images/sambar.jpg" },
-  { id: 16, name: "Rasam", rating: 4.1, image: "./images/rasam.jpg" },
-  { id: 17, name: "Curd Rice", rating: 4.3, image: "./images/curd-rice.jpg" },
-  { id: 18, name: "Fried Rice", rating: 4.2, image: "./images/fried-rice.jpg" },
-  { id: 19, name: "Noodles", rating: 4.0, image: "./images/noodles.jpg" },
-  { id: 20, name: "Manchurian", rating: 4.3, image: "./images/manchurian.jpg" },
-  { id: 21, name: "Chicken Curry", rating: 4.6, image: "./images/chicken-curry.jpg" },
-  { id: 22, name: "Fish Fry", rating: 4.5, image: "./images/fish-fry.jpg" },
-  { id: 23, name: "Prawns Curry", rating: 4.6, image: "./images/prawns.jpg" },
-  { id: 24, name: "Ice Cream", rating: 4.2, image: "./images/icecream.jpg" },
-  { id: 25, name: "Gulab Jamun", rating: 4.7, image: "./images/gulabjamun.jpg" }
 ]

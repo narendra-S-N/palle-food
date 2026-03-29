@@ -6,23 +6,22 @@ export default function RestaurantPage() {
   const [message, setMessage] = useState("");
 
   const menuItems = [
-    { name: "Pizza", price: 200 },
-    { name: "Burger", price: 150 },
-    { name: "Pasta", price: 180 },
-    { name: "Sandwich", price: 120 },
-    { name: "French Fries", price: 100 },
-    { name: "Noodles", price: 160 },
-    { name: "Fried Rice", price: 170 },
-    { name: "Paneer Tikka", price: 220 },
-    { name: "Chicken Wings", price: 250 },
-    { name: "Ice Cream", price: 90 },
+    { name: "Pizza", price: 200, shop: "Italian Delight" },
+    { name: "Burger", price: 150, shop: "Burger Hub" },
+    { name: "Pasta", price: 180, shop: "Italian Delight" },
+    { name: "Sandwich", price: 120, shop: "Snack Corner" },
+    { name: "French Fries", price: 100, shop: "Fast Food Express" },
+    { name: "Noodles", price: 160, shop: "Chinese Wok" },
+    { name: "Fried Rice", price: 170, shop: "Chinese Wok" },
+    { name: "Paneer Tikka", price: 220, shop: "Desi Tadka" },
+    { name: "Chicken Wings", price: 250, shop: "Grill House" },
+    { name: "Ice Cream", price: 90, shop: "Cool Treats" },
   ];
 
   const handleAddToCart = (item) => {
     addToCart(item);
-    setMessage(`${item.name} added successfully!`);
+    setMessage(`${item.name} from ${item.shop} added successfully!`);
 
-    // hide message after 2 seconds
     setTimeout(() => {
       setMessage("");
     }, 2000);
@@ -32,7 +31,6 @@ export default function RestaurantPage() {
     <div style={{ maxWidth: "600px", margin: "30px auto", fontFamily: "Arial, sans-serif" }}>
       <h1 style={{ textAlign: "center", color: "#333" }}>Menu</h1>
 
-      {/* Success Message */}
       {message && (
         <p
           style={{
@@ -62,9 +60,15 @@ export default function RestaurantPage() {
             backgroundColor: "#f9f9f9",
           }}
         >
-          <p style={{ margin: 0, fontSize: "16px", color: "#555" }}>
-            {item.name} - ₹{item.price}
-          </p>
+          <div>
+            <p style={{ margin: 0, fontSize: "16px", color: "#555" }}>
+              {item.name} - ₹{item.price}
+            </p>
+            <p style={{ margin: 0, fontSize: "14px", color: "#888" }}>
+              {item.shop}
+            </p>
+          </div>
+
           <button
             onClick={() => handleAddToCart(item)}
             style={{

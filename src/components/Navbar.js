@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 export default function Navbar() {
   const { cart } = useCart();
   const [user, setUser] = useState(null);
+  const adminEmail = "narendraseerla@gmail.com";
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -63,17 +64,29 @@ export default function Navbar() {
     flexDirection: "column",
     gap: "10px",
       }}>
-        <Link href="/" style={linkStyle}>
-          Home
-        </Link>
+<div>
+  <Link href="/" style={{ marginRight: "15px", color: "white" }}>
+    Home
+  </Link>
 
-        <Link href="/cart" style={linkStyle}>
-          Cart ({totalItems})
-        </Link>
+  <Link href="/cart" style={{ marginRight: "15px", color: "white" }}>
+    Cart ({totalItems})
+  </Link>
 
-        <Link href="/orders" style={linkStyle}>
-          Orders
-        </Link>
+  <Link href="/orders" style={{ marginRight: "15px", color: "white" }}>
+    Orders
+  </Link>
+
+  {/* ✅ Admin link only for you */}
+  {user && user.email === adminEmail && (
+    <div>
+    <Link href="/admin/orders" style={{ color: "white" }}>
+      Admin
+    </Link>
+    <Link href="/admin/analytics">Analytics</Link>
+    </div>
+  )}
+</div>
       </div>
 
       {/* Login / Logout */}
