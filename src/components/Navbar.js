@@ -59,11 +59,7 @@ export default function Navbar() {
       }}
     >
       {/* Links */}
-      <div style={{
-        display: "flex",
-    flexDirection: "column",
-    gap: "10px",
-      }}>
+      <div>
 <div>
   <Link href="/" style={{ marginRight: "15px", color: "white" }}>
     Home

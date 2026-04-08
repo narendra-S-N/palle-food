@@ -36,11 +36,11 @@ export function CartProvider({ children }) {
     setCart((prev) => prev.filter((item) => item.name !== name));
   };
 
-const clearCart = () => {
-  alert("it's workimgg now")
-  setCart([]);
-  localStorage.removeItem("cart");
-};
+  const clearCart = () => {
+    alert("it's workimgg now")
+    setCart([]);
+    localStorage.removeItem("cart");
+  };
 
   const increaseQty = (name) => {
     setCart((prev) =>
@@ -70,15 +70,15 @@ const clearCart = () => {
   return (
     <CartContext.Provider
       // value={{ cart, addToCart, removeFromCart, increaseQty, decreaseQty, total }}
-      value={{ 
-  cart, 
-  addToCart, 
-  removeFromCart, 
-  increaseQty, 
-  decreaseQty, 
-  total,
-  clearCart // ✅ add this
-}}
+      value={{
+        cart,
+        addToCart,
+        removeFromCart,
+        increaseQty,
+        decreaseQty,
+        total,
+        clearCart // ✅ add this
+      }}
     >
       {children}
     </CartContext.Provider>

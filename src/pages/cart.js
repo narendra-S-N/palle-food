@@ -9,25 +9,28 @@ export default function Cart() {
       <h1>Your Cart</h1>
 
       {cart.map((item) => (
-        <div key={`${item.name}-${item.shop}`} style={{ marginBottom: "10px" }}>
+        <div key={`${item.id}-${item.restaurantId}`} style={{ marginBottom: "10px" }}>
+          
           <p>
             <strong>{item.name}</strong> - ₹{item.price}
           </p>
 
           <p style={{ color: "#777", fontSize: "14px" }}>
-            Shop: {item.shop}
+            Shop: {item.shop || "Restaurant"}
           </p>
 
-          <button onClick={() => decreaseQty(item.name, item.shop)}>-</button>
+          <button onClick={() => decreaseQty(item.id, item.restaurantId)}>-</button>
           <span> {item.quantity} </span>
-          <button onClick={() => increaseQty(item.name, item.shop)}>+</button>
+          <button onClick={() => increaseQty(item.id, item.restaurantId)}>+</button>
 
-          <button onClick={() => removeFromCart(item.name, item.shop)}>
+          <button onClick={() => removeFromCart(item.id, item.restaurantId)}>
             Remove
           </button>
         </div>
       ))}
+
       <h2>Total: ₹{total}</h2>
+
       <Link href="/checkout">
         <button
           disabled={cart.length === 0}
