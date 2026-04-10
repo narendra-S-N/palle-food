@@ -15,52 +15,54 @@ export function CartProvider({ children }) {
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
-
-  const addToCart = (item) => {
-    setCart((prev) => {
-      const exist = prev.find((i) => i.name === item.name);
-
-      if (exist) {
-        return prev.map((i) =>
-          i.name === item.name
-            ? { ...i, quantity: i.quantity + 1 }
-            : i
-        );
-      }
-
-      return [...prev, { ...item, quantity: 1 }];
-    });
-  };
-
-  const removeFromCart = (name) => {
-    setCart((prev) => prev.filter((item) => item.name !== name));
-  };
-
-  const clearCart = () => {
-    alert("it's workimgg now")
-    setCart([]);
-    localStorage.removeItem("cart");
-  };
-
-  const increaseQty = (name) => {
-    setCart((prev) =>
-      prev.map((item) =>
-        item.name === name
-          ? { ...item, quantity: item.quantity + 1 }
-          : item
-      )
+const addToCart = (item) => {
+  setCart((prev) => {
+    const exist = prev.find(
+      (i) => i.id === item.id && i.restaurantId === item.restaurantId
     );
-  };
 
-  const decreaseQty = (name) => {
-    setCart((prev) =>
-      prev.map((item) =>
-        item.name === name && item.quantity > 1
-          ? { ...item, quantity: item.quantity - 1 }
-          : item
-      )
-    );
-  };
+    if (exist) {
+      return prev.map((i) =>
+        i.id === item.id && i.restaurantId === item.restaurantId
+          ? { ...i, quantity: i.quantity + 1 }
+          : i
+      );
+    }
+
+    return [...prev, { ...item, quantity: 1 }];
+  });
+};
+
+const removeFromCart = (id, restaurantId) => {
+  setCart((prev) =>
+    prev.filter(
+      (item) =>
+        !(item.id === id && item.restaurantId === restaurantId)
+    )
+  );
+};
+
+const increaseQty = (id, restaurantId) => {
+  setCart((prev) =>
+    prev.map((item) =>
+      item.id === id && item.restaurantId === restaurantId
+        ? { ...item, quantity: item.quantity + 1 }
+        : item
+    )
+  );
+};
+
+const decreaseQty = (id, restaurantId) => {
+  setCart((prev) =>
+    prev.map((item) =>
+      item.id === id &&
+      item.restaurantId === restaurantId &&
+      item.quantity > 1
+        ? { ...item, quantity: item.quantity - 1 }
+        : item
+    )
+  );
+};
 
   const total = cart.reduce(
     (sum, item) => sum + item.price * item.quantity,
@@ -77,7 +79,6 @@ export function CartProvider({ children }) {
         increaseQty,
         decreaseQty,
         total,
-        clearCart // ✅ add this
       }}
     >
       {children}

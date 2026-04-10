@@ -48,10 +48,10 @@ export default function RestaurantPage() {
   const handleAddToCart = (item) => {
     // addToCart(item);
     addToCart({
-  ...item,
-  shop: restaurant?.name,   // ✅ add this
-  restaurantId: id          // ✅ very important
-});
+      ...item,
+      shop: restaurant?.name,   // ✅ add this
+      restaurantId: id          // ✅ very important
+    });
 
     setMessage(`${item.name} added successfully!`);
 
@@ -103,15 +103,15 @@ export default function RestaurantPage() {
             <p style={{ margin: 0, fontSize: "16px", color: "#555" }}>
               {item.name} - ₹{item.price}
             </p>
-          {/* 🟢 Veg / 🔴 Non-Veg */}
-<p style={{
-  margin: 0,
-  fontSize: "14px",
-  fontWeight: "bold",
-  color: item.category === "veg" ? "green" : "red"
-}}>
-  {item.category === "veg" ? "🟢 Veg" : "🔴 Non-Veg"}
-</p>
+            {/* 🟢 Veg / 🔴 Non-Veg */}
+            <p style={{
+              margin: 0,
+              fontSize: "14px",
+              fontWeight: "bold",
+              color: item.category === "veg" ? "green" : "red"
+            }}>
+              {item.category === "veg" ? "🟢 Veg" : "🔴 Non-Veg"}
+            </p>
             {/* OPTIONAL: show restaurant name */}
             <p style={{ margin: 0, fontSize: "14px", color: "#888" }}>
               {restaurant?.name || "Restaurant"}
