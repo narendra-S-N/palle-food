@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect } from "react";
 import { useCart } from "../../context/CartContext";
 import { useRouter } from "next/router";
@@ -14,7 +16,7 @@ export default function RestaurantPage() {
   const [menuItems, setMenuItems] = useState([]);
   const [restaurant, setRestaurant] = useState(null);
 
-  // 🔥 FETCH MENU FROM FIREBASE
+  // 🔥 Fetch Data
   useEffect(() => {
     if (!id) return;
 
@@ -23,13 +25,15 @@ export default function RestaurantPage() {
         collection(db, "restaurants", id, "menu")
       );
 
-      const data = snapshot.docs.map(doc => ({
+      const data = snapshot.docs.map((doc) => ({
         id: doc.id,
-        ...doc.data()
+        ...doc.data(),
+        selectedQty: 1 // ✅ default quantity
       }));
 
       setMenuItems(data);
     };
+
     const fetchRestaurant = async () => {
       const docRef = doc(db, "restaurants", id);
       const docSnap = await getDoc(docRef);
@@ -40,17 +44,33 @@ export default function RestaurantPage() {
     };
 
     fetchRestaurant();
-
     fetchMenu();
   }, [id]);
 
-  // 🛒 ADD TO CART
+  // 🧮 Final Price
+  const getFinalPrice = (item) => {
+    if (!item.discountType || item.discountType === "none") {
+      return item.price;
+    }
+
+    if (item.discountType === "percent") {
+      return item.price - (item.price * item.discountValue) / 100;
+    }
+
+    if (item.discountType === "flat") {
+      return item.price - item.discountValue;
+    }
+
+    return item.price;
+  };
+
+  // 🛒 Add to Cart
   const handleAddToCart = (item) => {
-    // addToCart(item);
     addToCart({
       ...item,
-      shop: restaurant?.name,   // ✅ add this
-      restaurantId: id          // ✅ very important
+      shop: restaurant?.name,
+      restaurantId: id,
+      totalQty: item.baseQuantity * item.selectedQty // ✅ calculated
     });
 
     setMessage(`${item.name} added successfully!`);
@@ -60,89 +80,121 @@ export default function RestaurantPage() {
     }, 2000);
   };
 
+  // ➕➖ Quantity Change
+  const updateQty = (index, value) => {
+    const updated = [...menuItems];
+    updated[index].selectedQty = value < 1 ? 1 : value;
+    setMenuItems(updated);
+  };
+
   return (
-    <div style={{ maxWidth: "600px", margin: "30px auto", fontFamily: "Arial, sans-serif" }}>
-      <h1 style={{ textAlign: "center", color: "#333" }}>Menu</h1>
+    <div style={{ maxWidth: "600px", margin: "30px auto", fontFamily: "Arial" }}>
+      <h1 style={{ textAlign: "center" }}>
+        {restaurant?.name || "Menu"}
+      </h1>
 
       {message && (
-        <p
-          style={{
-            color: "green",
-            fontWeight: "bold",
-            backgroundColor: "#e0ffe0",
-            padding: "10px",
-            borderRadius: "5px",
-            textAlign: "center",
-          }}
-        >
+        <p style={{
+          color: "green",
+          background: "#e0ffe0",
+          padding: "10px",
+          textAlign: "center"
+        }}>
           {message}
         </p>
       )}
 
-      {/* ✅ EMPTY STATE */}
       {menuItems.length === 0 && (
         <p style={{ textAlign: "center" }}>No items available</p>
       )}
 
-      {/* ✅ DYNAMIC MENU */}
-      {menuItems.map((item) => (
-        <div
-          key={item.id}
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            padding: "12px 15px",
-            margin: "8px 0",
-            border: "1px solid #ccc",
-            borderRadius: "8px",
-            backgroundColor: "#f9f9f9",
-          }}
-        >
-          <div>
-            <p style={{ margin: 0, fontSize: "16px", color: "#555" }}>
-              {item.name} - ₹{item.price}
+      {menuItems.map((item, index) => {
+        const finalPrice = getFinalPrice(item);
+        const totalQty = item.baseQuantity * item.selectedQty;
+
+        return (
+          <div key={item.id} style={{
+            border: "1px solid #ddd",
+            borderRadius: "10px",
+            padding: "15px",
+            margin: "10px 0",
+            background: "#fafafa"
+          }}>
+            {/* 🔥 OFFER BADGE */}
+            {item.discountType !== "none" && (
+              <span style={{
+                background: "orange",
+                color: "white",
+                padding: "3px 8px",
+                borderRadius: "5px",
+                fontSize: "12px"
+              }}>
+                {item.discountType === "percent"
+                  ? `${item.discountValue}% OFF`
+                  : `₹${item.discountValue} OFF`}
+              </span>
+            )}
+
+            <h3 style={{ margin: "5px 0" }}>{item.name}</h3>
+
+            {/* PRICE */}
+            <p style={{ margin: 0 }}>
+              ₹{finalPrice}
+              {item.discountType !== "none" && (
+                <span style={{
+                  textDecoration: "line-through",
+                  marginLeft: "8px",
+                  color: "#999"
+                }}>
+                  ₹{item.price}
+                </span>
+              )}
             </p>
-            {/* 🟢 Veg / 🔴 Non-Veg */}
+
+            {/* QUANTITY DISPLAY */}
+            <p style={{ margin: "5px 0", color: "#555" }}>
+              {item.baseQuantity} {item.unit}
+            </p>
+
+            {/* TOTAL AFTER SELECT */}
+            <p style={{ fontSize: "13px", color: "#777" }}>
+              Total: {totalQty} {item.unit}
+            </p>
+
+            {/* VEG/NON-VEG */}
             <p style={{
-              margin: 0,
-              fontSize: "14px",
-              fontWeight: "bold",
-              color: item.category === "veg" ? "green" : "red"
+              color: item.category === "veg" ? "green" : "red",
+              fontWeight: "bold"
             }}>
               {item.category === "veg" ? "🟢 Veg" : "🔴 Non-Veg"}
             </p>
-            {/* OPTIONAL: show restaurant name */}
-            <p style={{ margin: 0, fontSize: "14px", color: "#888" }}>
-              {restaurant?.name || "Restaurant"}
-            </p>
 
-            {/* 🖼️ IMAGE */}
+            {/* IMAGE */}
             {item.image && (
               <img
                 src={item.image}
                 width="80"
-                style={{ marginTop: "5px", borderRadius: "5px" }}
+                style={{ borderRadius: "5px" }}
               />
             )}
-          </div>
 
-          <button
-            onClick={() => handleAddToCart(item)}
-            style={{
-              backgroundColor: "#ff6b6b",
-              color: "white",
-              border: "none",
-              padding: "8px 16px",
-              borderRadius: "5px",
-              cursor: "pointer",
-              fontWeight: "bold",
-            }}
-          >
-            Add to Cart
-          </button>
-        </div>
-      ))}
+            {/* ADD TO CART */}
+            <button
+              onClick={() => handleAddToCart(item)}
+              style={{
+                marginTop: "10px",
+                background: "#ff6b6b",
+                color: "white",
+                padding: "8px 15px",
+                border: "none",
+                borderRadius: "5px"
+              }}
+            >
+              Add to Cart
+            </button>
+          </div>
+        );
+      })}
     </div>
   );
 }
